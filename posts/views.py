@@ -6,6 +6,7 @@ from profiles.models import Profile
 from .utils import action_permission
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+
 # Create your views here.
 
 @login_required
@@ -32,14 +33,18 @@ def post_list_and_create(request):
 
 @login_required
 def post_detail(request, pk):
-    obj = Post.objects.get(pk=pk)
+    try:
+        obj = Post.objects.get(pk=pk)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid ID format. Post ID must be a number.'}, status=400)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Post not found'}, status=404)
     form = PostForm()
 
     context = {
         'obj': obj,
         'form': form,
     }
-
     return render(request, 'posts/detail.html', context)
 
 @login_required
