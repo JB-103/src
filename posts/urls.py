@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from .views import (
     post_list_and_create,
     load_post_data_view,
@@ -23,4 +24,5 @@ urlpatterns = [
 
     path('data/<int:num_posts>/', load_post_data_view, name='posts-data'),
     path('<pk>/data/', post_detail_data_view, name='post_detail_data'),
+    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico', permanent=True)),
 ]
