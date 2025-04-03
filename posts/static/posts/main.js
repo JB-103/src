@@ -130,7 +130,7 @@ postForm.addEventListener('submit', e=>{
     e.preventDefault()
 
     $.ajax({
-        type: 'Post',
+        type: 'POST',
         url: '', 
         data: {
             'csrfmiddlewaretoken': csrf[0].value,
